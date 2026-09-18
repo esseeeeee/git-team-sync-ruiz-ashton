@@ -16,7 +16,19 @@ function cancelOrder(order) {
 }
 
 function calculateLoyaltyPoints(order) {
-  return Math.floor(order.total / 10);
+    const basePoints = order.total || 0;
+    
+    if (basePoints > 100) {
+        return Math.floor(basePoints * 1.5);
+    }
+    
+    return Math.floor(basePoints);
 }
 
+function VIPBonus (order, isVIP) {
+    if (isVIP) {
+        return calculateLoyaltyPoints(order) * 1.5; // VIP customers get an extra 50 points
+    }
+
+    
 module.exports = { createOrder, applyDiscount, cancelOrder, calculateLoyaltyPoints };
